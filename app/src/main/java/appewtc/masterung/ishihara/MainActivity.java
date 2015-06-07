@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             choice3RadioButton, choice4RadioButton;
     private Button answerButton;
     private int radioAnInt, indexAnInt;
-
+    private MyModel objMyModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,36 @@ public class MainActivity extends AppCompatActivity {
         //Radio Controller
         radioController();
 
+        //About Model
+        aboutModel();
+
     }   // onCreate
+
+    private void aboutModel() {
+
+        objMyModel = new MyModel();
+        objMyModel.setOnMyModelChangeListener(new MyModel.OnMyModelChangeListener() {
+            @Override
+            public void onMyModelChangeListener(MyModel myModel) {
+
+                //Change View
+                changeView(myModel.getModelAnInt());
+
+            }   // event
+        });
+
+    }   // aboutModel
+
+    private void changeView(int modelAnInt) {
+
+        //Change Image
+        int intDrawable[] = new int[]{R.drawable.ishihara_01, R.drawable.ishihara_02,
+                R.drawable.ishihara_03, R.drawable.ishihara_04, R.drawable.ishihara_05,
+                R.drawable.ishihara_06, R.drawable.ishihara_07, R.drawable.ishihara_08,
+                R.drawable.ishihara_09, R.drawable.ishihara_10};
+        ishiharaImageView.setImageResource(intDrawable[modelAnInt]);
+
+    }   // changeView
 
     private void radioController() {
 
@@ -125,7 +154,10 @@ public class MainActivity extends AppCompatActivity {
             indexAnInt += 1;
 
             //Controller Call View
-            questionTextView.setText(Integer.toString(indexAnInt + 1) + ". What is this ?" );
+            questionTextView.setText(Integer.toString(indexAnInt + 1) + ". What is this ?");
+
+            //Controller Call Model
+            objMyModel.setModelAnInt(indexAnInt);
 
         }
 
